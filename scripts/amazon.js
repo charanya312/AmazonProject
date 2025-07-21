@@ -1,6 +1,4 @@
-
 let productsHTML = '';
-
 products.forEach((product) => {
   productsHTML += `
     <div class="product-container">
@@ -12,15 +10,13 @@ products.forEach((product) => {
       <div class="product-name limit-text-to-2-lines">
         ${product.name}
       </div>
-
       <div class="product-rating-container">
         <img class="product-rating-stars"
-          src="images/ratings/rating-${product.rating.stars * 10}.png">
+          src="images/ratings/rating-${product.rating.stars*10}.png">
         <div class="product-rating-count link-primary">
           ${product.rating.count}
         </div>
       </div>
-
       <div class="product-price">
         $${(product.priceCents / 100).toFixed(2)}
       </div>
@@ -54,9 +50,7 @@ products.forEach((product) => {
     </div>
   `;
 });
-
 document.querySelector('.js-products-grid').innerHTML = productsHTML;
-
 document.querySelectorAll('.js-add-to-cart')
   .forEach((button) => {
     button.addEventListener('click', () => {
