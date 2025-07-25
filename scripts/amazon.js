@@ -1,8 +1,20 @@
-import {cart, addToCart} from '../data/cart.js';
-import {products, loadProducts} from '../data/products.js';
-import {formatCurrency} from './utils/money.js';
+import { cart, addToCart } from '../data/cart.js';
+import { products, loadProducts } from '../data/products.js';
+import { formatCurrency } from './utils/money.js';
 
 loadProducts(renderProductsGrid);
+
+// ✅ Define updateCartQuantity function BEFORE using it
+function updateCartQuantity() {
+  let cartQuantity = 0;
+  cart.forEach(item => {
+    cartQuantity += item.quantity;
+  });
+  document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
+}
+
+// ✅ Call it AFTER defining
+updateCartQuantity(); // Show correct cart count when page loads
 
 function renderProductsGrid() {
   let productsHTML = '';
@@ -11,8 +23,7 @@ function renderProductsGrid() {
     productsHTML += `
       <div class="product-container">
         <div class="product-image-container">
-          <img class="product-image"
-            src="${product.image}">
+          <img class="product-image" src="${product.image}">
         </div>
 
         <div class="product-name limit-text-to-2-lines">
@@ -20,8 +31,7 @@ function renderProductsGrid() {
         </div>
 
         <div class="product-rating-container">
-          <img class="product-rating-stars"
-            src="${product.getStarsUrl()}">
+          <img class="product-rating-stars" src="${product.getStarsUrl()}">
           <div class="product-rating-count link-primary">
             ${product.rating.count}
           </div>
@@ -56,7 +66,7 @@ function renderProductsGrid() {
         </div>
 
         <button class="add-to-cart-button button-primary js-add-to-cart"
-        data-product-id="${product.id}">
+          data-product-id="${product.id}">
           Add to Cart
         </button>
       </div>
@@ -65,17 +75,6 @@ function renderProductsGrid() {
 
   document.querySelector('.js-products-grid').innerHTML = productsHTML;
 
-  function updateCartQuantity() {
-    let cartQuantity = 0;
-
-    cart.forEach((cartItem) => {
-      cartQuantity += cartItem.quantity;
-    });
-
-    document.querySelector('.js-cart-quantity')
-      .innerHTML = cartQuantity;
-  }
-
   document.querySelectorAll('.js-add-to-cart')
     .forEach((button) => {
       button.addEventListener('click', () => {
@@ -83,7 +82,6 @@ function renderProductsGrid() {
         addToCart(productId);
         updateCartQuantity();
 
-        // ✅ Show the "Added" checkmark temporarily
         const container = button.closest('.product-container');
         const addedMessage = container.querySelector('.added-to-cart');
         addedMessage.classList.add('visible');
