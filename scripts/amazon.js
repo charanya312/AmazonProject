@@ -82,6 +82,15 @@ function renderProductsGrid() {
         const productId = button.dataset.productId;
         addToCart(productId);
         updateCartQuantity();
+
+        // ✅ Show the "Added" checkmark temporarily
+        const container = button.closest('.product-container');
+        const addedMessage = container.querySelector('.added-to-cart');
+        addedMessage.classList.add('visible');
+
+        setTimeout(() => {
+          addedMessage.classList.remove('visible');
+        }, 1500);
       });
     });
 }
